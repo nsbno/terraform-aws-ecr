@@ -13,14 +13,25 @@ variable "max_images_retained" {
   default     = 100
 }
 
+variable "trusted_accounts" {
+  description = "IDs of other accounts that are trusted to pull and push to this repostitory"
+  type        = list(any)
+}
+
 variable "tags" {
   description = "A map of tags (key-value pairs) passed to resources."
-  type        = map(string)
+  type        = map(any)
   default     = {}
 }
 
-variable "trusted_accounts" {
-  description = "IDs of other accounts that are trusted to pull and push to this repostitory"
-  type        = list(string)
+variable "image_tag_mutability" {
+  description = "The tag mutability setting for the repository"
+  type        = bool
+  default     = true
 }
 
+variable "enable_scan_on_push" {
+  description = "Enable vulnarability scanning on image push"
+  type        = bool
+  default     = true
+}

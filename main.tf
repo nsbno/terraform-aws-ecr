@@ -4,6 +4,14 @@
 
 resource "aws_ecr_repository" "ecr_repo" {
   name = var.name_prefix
+
+  image_tag_mutability = var.image_tag_mutability ? "MUTABLE" : "IMMUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = var.enable_scan_on_push
+  }
+
+  tags = var.tags
 }
 
 resource "aws_ecr_repository_policy" "ecr_policy" {
@@ -12,6 +20,7 @@ resource "aws_ecr_repository_policy" "ecr_policy" {
 }
 
 data "aws_iam_policy_document" "ecr_policy_doc" {
+
   statement {
     effect = "Allow"
 
@@ -54,6 +63,4 @@ resource "aws_ecr_lifecycle_policy" "keep_last_N" {
     ]
   }
 EOF
-
 }
-
