@@ -35,3 +35,9 @@ variable "enable_scan_on_push" {
   type        = bool
   default     = true
 }
+
+variable "extra_ecr_policies" {
+  description = "Extra policy documents in JSON to use for the ECR repository"
+  type        = list(string)
+  default     = []
+}

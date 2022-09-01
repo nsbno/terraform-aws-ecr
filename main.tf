@@ -20,9 +20,10 @@ resource "aws_ecr_repository_policy" "ecr_policy" {
 }
 
 data "aws_iam_policy_document" "ecr_policy_doc" {
+  source_policy_documents = var.extra_ecr_policies
 
   statement {
-    effect = "Allow"
+    sid = "AllowTrustedAccounts"
 
     principals {
       type = "AWS"
@@ -44,6 +45,7 @@ data "aws_iam_policy_document" "ecr_policy_doc" {
 
 resource "aws_ecr_lifecycle_policy" "keep_last_N" {
   repository = aws_ecr_repository.ecr_repo.id
+
 
   policy = <<EOF
   {
