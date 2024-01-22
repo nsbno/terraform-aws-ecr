@@ -40,6 +40,7 @@ data "aws_iam_policy_document" "ecr_policy_doc" {
       "ecr:UploadLayerPart",
       "ecr:CompleteLayerUpload",
       "ecr:DescribeImages",
+      "ecr:DescribeRepositories",
     ]
   }
 }
