@@ -41,6 +41,7 @@ data "aws_iam_policy_document" "ecr_policy_doc" {
       "ecr:CompleteLayerUpload",
       "ecr:DescribeImages",
       "ecr:DescribeRepositories",
+      "ecr:ListTagsForResource",
     ]
   }
 }
