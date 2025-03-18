@@ -62,7 +62,7 @@ data "aws_ecr_lifecycle_policy_document" "lifecycle_policy" {
     for_each = var.protected_image_tag_prefixes
     content {
       priority    = index(var.protected_image_tag_prefixes, rule.value) + 2 # TF lists are 0 indexed, and we want the first in the list to be at priority 2
-      description = "Protect the ${rule.value} branch"
+      description = "Protect the ${rule.value} tag prefix"
 
       selection {
         tag_status      = "tagged"
