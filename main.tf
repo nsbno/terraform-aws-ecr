@@ -46,26 +46,46 @@ data "aws_iam_policy_document" "ecr_policy_doc" {
   }
 }
 
+data "aws_ecr_lifecycle_policy_document" "lifecycle_policy" {
+  rule {
+    priority    = 1
+    description = "Clean untagged images"
+
+    selection {
+      tag_status   = "untagged"
+      count_type   = "imageCountMoreThan"
+      count_number = var.max_untagged_images_retained
+    }
+  }
+
+  dynamic "rule" {
+    for_each = var.protected_image_tag_prefixes
+    content {
+      priority    = index(var.protected_image_tag_prefixes, rule.value) + 2 # TF lists are 0 indexed, and we want the first in the list to be at priority 2
+      description = "Protect the ${rule.value} tag prefix"
+
+      selection {
+        tag_status      = "tagged"
+        tag_prefix_list = [rule.value]
+        count_type      = "imageCountMoreThan"
+        count_number    = var.max_protected_images_retained
+      }
+    }
+  }
+
+  rule {
+    priority    = length(var.protected_image_tag_prefixes) + 2
+    description = "Keep last N images"
+
+    selection {
+      tag_status   = "any"
+      count_type   = "imageCountMoreThan"
+      count_number = var.max_images_retained
+    }
+  }
+}
+
 resource "aws_ecr_lifecycle_policy" "keep_last_N" {
   repository = aws_ecr_repository.ecr_repo.id
-
-
-  policy = <<EOF
-  {
-    "rules": [
-        {
-            "rulePriority": 1,
-            "description": "Keep last N images",
-            "selection": {
-                "tagStatus": "any",
-                "countType": "imageCountMoreThan",
-                "countNumber": ${var.max_images_retained}
-            },
-            "action": {
-                "type": "expire"
-            }
-        }
-    ]
-  }
-EOF
+  policy     = data.aws_ecr_lifecycle_policy_document.lifecycle_policy.json
 }
