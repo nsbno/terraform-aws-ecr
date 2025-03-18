@@ -13,6 +13,24 @@ variable "max_images_retained" {
   default     = 100
 }
 
+variable "max_protected_images_retained" {
+  description = "The max number of images retained per protected image tag to keep in the repository before expiring the oldest"
+  type        = number
+  default     = 1
+}
+
+variable "max_untagged_images_retained" {
+  description = "The max number of untagged images to keep in the repository before expiring the oldest"
+  type        = number
+  default     = 1
+}
+
+variable "protected_branches" {
+  description = "The name of the branches that should be given extra protection against having their images expired"
+  type        = list(string)
+  default     = []
+}
+
 variable "trusted_accounts" {
   description = "IDs of other accounts that are trusted to pull and push to this repostitory"
   type        = list(any)
