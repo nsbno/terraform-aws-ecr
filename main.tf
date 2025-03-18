@@ -46,10 +46,6 @@ data "aws_iam_policy_document" "ecr_policy_doc" {
   }
 }
 
-locals {
-
-}
-
 data "aws_ecr_lifecycle_policy_document" "lifecycle_policy" {
   rule {
     priority    = 1
