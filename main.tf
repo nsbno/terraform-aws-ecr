@@ -63,9 +63,9 @@ data "aws_ecr_lifecycle_policy_document" "lifecycle_policy" {
   }
 
   dynamic "rule" {
-    for_each = var.protected_branches
+    for_each = var.protected_image_tag_prefixes
     content {
-      priority    = index(var.protected_branches, rule.value) + 2 # TF lists are 0 indexed, and we want the first in the list to be at priority 2
+      priority    = index(var.protected_image_tag_prefixes, rule.value) + 2 # TF lists are 0 indexed, and we want the first in the list to be at priority 2
       description = "Protect the ${rule.value} branch"
 
       selection {
@@ -78,7 +78,7 @@ data "aws_ecr_lifecycle_policy_document" "lifecycle_policy" {
   }
 
   rule {
-    priority    = length(var.protected_branches) + 2
+    priority    = length(var.protected_image_tag_prefixes) + 2
     description = "Keep last N images"
 
     selection {

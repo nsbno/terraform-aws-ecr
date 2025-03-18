@@ -25,8 +25,8 @@ variable "max_untagged_images_retained" {
   default     = 1
 }
 
-variable "protected_branches" {
-  description = "The name of the branches that should be given extra protection against having their images expired"
+variable "protected_image_tag_prefixes" {
+  description = "A list of image tag prefixes that should be given extra protection against having their images expired"
   type        = list(string)
   default     = []
 }
