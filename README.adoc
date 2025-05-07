@@ -1,8 +1,9 @@
-# ECR Module
+= ECR Module
+:!toc-title:
+:!toc-placement:
+:toc:
 
-[![workflow](https://github.com/telia-oss/terraform-aws-ecr/workflows/workflow/badge.svg)](https://github.com/telia-oss/terraform-aws-ecr/actions)
-
-This module creates a repository on ECR (and associated policies) that other accounts can be given push and pull access to.
+Creates a repository on ECR (and associated policies) that other accounts can be given push and pull access to.
 
 - Creates a repository on ECR
 - Creates a policy to allow other accounts push and pull access
@@ -11,3 +12,26 @@ This module creates a repository on ECR (and associated policies) that other acc
   2. For each Element in the new variable `protected_image_tag_prefixes` (defaults to an empty list), retain only Y (configurable, default is 1) images whose tag starts with each of the elements of `protected_image_tag_prefixes`
   3. Retain only Z images in total (configurable, default is 100).
 - Enable/Disable vulnerability scan on image push (default enabled)
+
+
+toc::[]
+
+
+== Usage
+Remember to check out the link:variables.tf[*variables*] and link:outputs.tf[*outputs*] to see all options.
+
+[source, hcl]
+----
+module "ecr" {
+  source      = "github.com/nsbno/terraform-aws-ecr?ref=x.y.z"
+  name_prefix = var.name_prefix
+
+  trusted_accounts = [
+    data.aws_caller_identity.current.account_id
+  ]
+}
+----
+
+== Examples
+See the link:examples/basic/README.adoc[basic example] to see how to use this module
+
