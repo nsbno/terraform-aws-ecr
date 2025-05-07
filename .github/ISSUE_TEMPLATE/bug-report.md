@@ -14,7 +14,7 @@ labels: bug
 
 ```hcl
 module "template" {
-    name_prefix = "template-basic-example"
+    repo_name = "template-basic-example"
 }
 ```
 

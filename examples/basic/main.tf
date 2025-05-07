@@ -1,8 +1,8 @@
 data "aws_caller_identity" "current" {}
 
 module "ecr" {
-  source      = "../../"
-  name_prefix = var.name_prefix
+  source    = "../../"
+  repo_name = "ecr-basic-example"
 
   trusted_accounts = [
     data.aws_caller_identity.current.account_id

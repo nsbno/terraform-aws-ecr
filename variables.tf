@@ -2,7 +2,7 @@
 # Variables
 # ------------------------------------------------------------------------------
 
-variable "name_prefix" {
+variable "repo_name" {
   description = "A prefix used for naming resources."
   type        = string
 }

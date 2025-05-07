@@ -38,8 +38,8 @@ func TestModule(t *testing.T) {
 
 				Vars: map[string]interface{}{
 					// ECR does not support capital letters.
-					"name_prefix": strings.ToLower(tc.name),
-					"region":      tc.region,
+					"repo_name": strings.ToLower(tc.name),
+					"region":    tc.region,
 				},
 
 				EnvVars: map[string]string{

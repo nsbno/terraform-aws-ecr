@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------------------
 
 resource "aws_ecr_repository" "ecr_repo" {
-  name = var.name_prefix
+  name = var.repo_name
 
   image_tag_mutability = var.image_tag_mutability ? "MUTABLE" : "IMMUTABLE"
 

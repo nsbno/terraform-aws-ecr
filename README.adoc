@@ -24,7 +24,7 @@ Remember to check out the link:variables.tf[*variables*] and link:outputs.tf[*ou
 ----
 module "ecr" {
   source      = "github.com/nsbno/terraform-aws-ecr?ref=x.y.z"
-  name_prefix = var.name_prefix
+  repo_name   = "ecr-repo-example-name"
 
   trusted_accounts = [
     data.aws_caller_identity.current.account_id
