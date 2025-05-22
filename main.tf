@@ -44,6 +44,28 @@ data "aws_iam_policy_document" "ecr_policy_doc" {
       "ecr:ListTagsForResource",
     ]
   }
+
+  statement {
+	sid = "AllowLambdaAccess"
+
+	principals {
+	  type = "Service"
+
+	  identifiers = ["lambda.amazonaws.com"]
+	}
+
+	condition {
+	  test     = "StringEquals"
+	  variable = "aws:SourceAccount"
+	  values   = var.trusted_accounts
+	}
+
+	actions = [
+	  "ecr:GetDownloadUrlForLayer",
+	  "ecr:BatchGetImage",
+	  "ecr:BatchCheckLayerAvailability",
+	]
+  }
 }
 
 data "aws_ecr_lifecycle_policy_document" "lifecycle_policy" {
