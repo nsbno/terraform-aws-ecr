@@ -46,25 +46,25 @@ data "aws_iam_policy_document" "ecr_policy_doc" {
   }
 
   statement {
-	sid = "AllowLambdaAccess"
+    sid = "AllowLambdaAccess"
 
-	principals {
-	  type = "Service"
+    principals {
+      type = "Service"
 
-	  identifiers = ["lambda.amazonaws.com"]
-	}
+      identifiers = ["lambda.amazonaws.com"]
+    }
 
-	condition {
-	  test     = "StringEquals"
-	  variable = "aws:SourceAccount"
-	  values   = var.trusted_accounts
-	}
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceAccount"
+      values   = var.trusted_accounts
+    }
 
-	actions = [
-	  "ecr:GetDownloadUrlForLayer",
-	  "ecr:BatchGetImage",
-	  "ecr:BatchCheckLayerAvailability",
-	]
+    actions = [
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:BatchGetImage",
+      "ecr:BatchCheckLayerAvailability",
+    ]
   }
 }
 
